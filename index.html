@@ -1,40 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Pizza Cart API</title>
+    <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="//unpkg.com/alpinejs" defer></script>
     <script src="pizza-cart-api.js"></script>
-    <script> 
-         axios
-        .get('https://pizza-cart-api.herokuapp.com/api/pizzas')
-        .then((result) =>{
-            console.log(result.data);
-         })
-    </script> 
+
+
+    <script>
+        axios
+            .get('https://pizza-cart-api.herokuapp.com/api/pizzas')
+            .then((result) => {
+                console.log(result.data);
+            })
+    </script>
 </head>
+
 <body>
     <div x-data="pizzaCartWithAPIWidget">
         <div x-text="message"></div>
+        <div x-text="cartId"></div>
         <h2>Pizzas you can order</h2>
+        <div>
+            Who is buying the pizzas:<input type="text" placeholder="Please Enter Your Name" x-model="username">
+        </div>
+
         <strong x-text="pizzas.length"></strong>
 
-        <table>
-            <template x-for="pizza in pizzas">
-                <tr>
-                    <td x-text="pizza.flavour"></td>
-                    <td x-text="pizza.size"></td>
-                    <td x-text="pizza.price"></td>
-                    <td>
-                        <button x-on:click="add(pizza)">Buy</button>
-                    </td>
-                </tr>
+        <div class="all-pizza">
 
-            </template>
-        </table>
+            <div>
+                <div class="cart" x-show="cart.total > 0">
+                    <table>
+                        <tr>
+                            <th>Flavour</th>
+                            <th>Qty</th>
+                            <th>Total</th>
+                        </tr>
+                        <template x-for="pizza in cart.pizzas">
+
+                            <tr>
+                                <td x-text="pizza.flavour"></td>
+                                <td>
+                                    <span x-text="pizza.qty"></span>
+                                    <button x-on:click="add(pizza)">+</button>
+                                    <button x-on:click="remove(pizza)">-</button>
+                                </td>
+                                <td x-text="pizza.total.toFixed(2)"></td>
+                            </tr>
+                        </template>
+                        <tr>
+                            <td colspan="2">
+                                <strong>Cart Total: </strong>
+                            </td>
+                            <td><strong x-text="cart.total.toFixed(2)"></strong></td>
+                        </tr>
+
+
+                        <tr>
+                            <td colspan="2">
+                                <div x-show="payNow">
+                                    <div class="message" x-text="paymentMessage"></div>
+                                    <div>
+                                        <label for="">Payment Amount</label>
+                                        <input class="input" type="number" placeholder="Payment Amount"
+                                            x-model="paymentAmount">
+                                    </div>
+                                    <button x-on:click="pay()" class="btn"><img src="cart_pic.png" width="20" alt="">Pay
+                                        Now</button>
+                                </div>
+                            </td>
+
+                            <td>
+                                <button x-show="!payNow" x-on:click="payNow=true" class="btn"><img src="cart_pic.png"
+                                        width="20" alt="">checkout</button>
+                            </td>
+                        </tr>
+
+                    </table>
+
+
+                </div>
+            </div>
+
+
+            <div class="featured-pizzas" x-show="display">
+                <div class="Featured">
+                    <template x-for="pizza in cart.pizzas">
+                        <div class="featured-items">
+                            <div>
+                                <h3 x-text="pizza.flavour"></h3>
+                            </div>
+                            <img x-bind:src="pizzaImage(pizza)" height="60" alt="">
+                            <div>
+                                <h3 x-text="pizza.size"></h3>
+                            </div>
+                            <div>
+                                <h3 x-text="pizza.price"></h3>
+                            </div>
+                            <button @click="add(pizza)">Buy</button>
+                        </div>
+                        ​
+                    </template>
+                    ​
+                </div>
+            </div>
+
+
+            <table>
+                <template x-for="pizza in pizzas">
+                    <tr>
+                        <td>
+                            <img x-bind:src="pizzaImage(pizza)" height="20" alt="">
+                        </td>
+                        <td x-text="pizza.flavour"></td>
+                        <td x-text="pizza.size"></td>
+                        <td x-text="pizza.price"></td>
+                        <td>
+                            <button x-on:click="add(pizza)">Buy</button>
+                        </td>
+                    </tr>
+                </template>
+            </table>
+        </div>
     </div>
+
+
+
+
 </body>
+
 </html>

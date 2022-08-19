@@ -1,0 +1,61 @@
+body {
+    align-content: center;
+    background-color: #E5E5E5;
+
+
+}
+
+.all-pizza {
+    background-color: aqua;
+    border-radius: 0.25em;
+    margin: 1em;
+    padding: 1em;
+    border: 1em;
+
+}
+
+.cart {
+    border: 1px;
+    background-color: aqua;
+    /* width: 35em; */
+
+}
+
+.cart-total {
+    background-color: greenyellow;
+}
+
+table,
+th,
+td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 0.25em;
+    background-color: #CDD93F;
+
+}
+
+.tbl {
+    margin-top: 1em;
+    align-content: center;
+
+}
+
+.message {
+    background-color: yellow;
+    padding: 0.75em;
+}
+
+.featured-items {
+    /* padding: 1em; */
+    margin: 1em;
+    padding: 1em;
+    display: inline-table;
+    width: auto;
+    background-color: pink;
+}
+
+.Featured {
+    width: 35em;
+
+}
